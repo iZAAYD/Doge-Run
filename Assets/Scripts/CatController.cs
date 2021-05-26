@@ -21,7 +21,7 @@ public class CatController : MonoBehaviour
     {
         if (gameManager.CurrentGameState != GameManager.GameState.Playing) return;
         _anim.SetBool("IsRunning", true);
-        
+
         if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
         {
             _jumped = true;
@@ -34,8 +34,11 @@ public class CatController : MonoBehaviour
             {
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    _jumped = true;
-                    _isJumping = true;
+                    if (!_isJumping)
+                    {
+                        _jumped = true;
+                        _isJumping = true;
+                    }
                 }
 
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -57,7 +60,7 @@ public class CatController : MonoBehaviour
     {
         if (gameManager.CurrentGameState == GameManager.GameState.Playing)
             _rb.position = new Vector2(transform.position.x + vel * Time.deltaTime, transform.position.y);
-        
+
 
         if (!_jumped) return;
         _jumped = false;
